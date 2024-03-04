@@ -4,3 +4,5 @@ Put this 3 files in "./" directory
 With own compiler compile the files
 
 v. pre-alpha 0.0.1
+  setted project
+  created window
