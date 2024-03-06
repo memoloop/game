@@ -12,18 +12,23 @@ int main() {
     SDL_Event event;
 
     while(run) {
-        while(SDL_PollEvent(&event)) {
-            if(event.type == SDL_QUIT) {
-                run = false;
-            }
+        SDL_PollEvent(&event);
+        if(event.type == SDL_QUIT) {
+            run = false;
+        }
+
+        const Uint8* keys = SDL_GetKeyboardState(nullptr);
+        if(keys[SDL_SCANCODE_D]) {
+            entity->rect.x += 1;
         }
 
         SDL_RenderClear(window->getRenderer());
-        
 
         entity->draw();
+
         SDL_SetRenderDrawColor(window->getRenderer(), 120, 200, 255, 255);
         SDL_RenderPresent(window->getRenderer());
+        SDL_Delay(60);
     }
 
     delete window;

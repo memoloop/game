@@ -4,7 +4,18 @@ Entity::Entity(SDL_Renderer* renderer, int x, int y, int w, int h, const char* p
     rect = {x, y, w, h};
     this->path = path;
     this->renderer = renderer;
+    hasTexture = true;
     setTexture();
+}
+
+Entity::Entity(SDL_Renderer* renderer, int x, int y, int w, int h) {
+    rect = {x, y, w, h};
+    hasTexture = false;
+    this->renderer = renderer;
+}
+
+void Entity::setColor(int r, int g, int b, int a) {
+    color = {r, g, b, a};
 }
 
 void Entity::setTexture() {
@@ -16,7 +27,13 @@ void Entity::setTexture() {
 }
 
 void Entity::draw() {
-    SDL_RenderCopy(renderer, texture, NULL, &rect);
+    if(!hasTexture) {
+        SDL_SetRenderDrawColor(renderer, color.r, color.g, color.b, color.a);
+        SDL_RenderDrawRect(renderer, &rect);        
+        SDL_RenderFillRect(renderer, &rect);
+    } else {
+        SDL_RenderCopy(renderer, texture, NULL, &rect);
+    }
 }
 
 Entity::~Entity() {

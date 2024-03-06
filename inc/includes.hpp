@@ -10,4 +10,8 @@
 
 #include "errors.hpp"
 
+struct Color {
+    int r, g, b, a;
+};
+
 #endif
