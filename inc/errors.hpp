@@ -3,7 +3,8 @@
 
 enum Error {
     no, sdlInit, imgInit, ttfInit,
-    eWindow, eRenderer
+    eWindow, eRenderer,
+    eTexture
 };
 
 #endif
