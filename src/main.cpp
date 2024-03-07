@@ -1,12 +1,16 @@
-#include "includes.hpp"
-#include "errors.hpp"
+#include "engine/includes.hpp"
+#include "engine/errors.hpp"
 
-#include "window.hpp"
-#include "entity.hpp"
+#include "engine/window.hpp"
+#include "engine/entity.hpp"
+#include "player.hpp"
 
 int main() {
     Window* window = new Window();
-    Entity* entity = new Entity(window->getRenderer(), 0, 0, 100, 100, "res/images/player/player_idle.png");
+    Player* player = new Player(window->getRenderer());
+    player->setColor(255, 255, 0, 255);
+
+    const Uint8* keys = SDL_GetKeyboardState(nullptr);
 
     bool run = true;
     SDL_Event event;
@@ -16,23 +20,22 @@ int main() {
         if(event.type == SDL_QUIT) {
             run = false;
         }
-
-        const Uint8* keys = SDL_GetKeyboardState(nullptr);
-        if(keys[SDL_SCANCODE_D]) {
-            entity->rect.x += 1;
-        }
+        
+        player->input(keys);
+        player->update();
 
         SDL_RenderClear(window->getRenderer());
 
-        entity->draw();
+        player->draw();
 
         SDL_SetRenderDrawColor(window->getRenderer(), 120, 200, 255, 255);
         SDL_RenderPresent(window->getRenderer());
-        SDL_Delay(60);
+        SDL_Delay(10);
     }
 
     delete window;
-    delete entity;
+    delete player;
+    delete keys;
 
     return no;
 }
