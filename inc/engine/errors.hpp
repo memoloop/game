@@ -4,7 +4,8 @@
 enum Error {
     no, sdlInit, imgInit, ttfInit,
     eWindow, eRenderer,
-    eTexture
+    eTexture,
+    mixInit, eLoadAudio, ePlayAudio
 };
 
 #endif

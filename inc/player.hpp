@@ -12,10 +12,12 @@ class Player:Entity {
     void update();
 
     void setColor(int r, int g, int b, int a);
+    bool collide(Entity* other);
 
     private:
     float speed;
-    Vector2 direction;
+    float strenght;
+    void setGravity();
 };
 
 #endif
