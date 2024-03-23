@@ -6,17 +6,27 @@
 
 #include "player.hpp"
 
+#include "level.hpp"
+
 int main() {
     Window* window = new Window();
     Audio::init();
     Player* player = new Player(window->getRenderer());
     player->setColor(255, 255, 0, 255);
 
-    Entity* e = new Entity(window->getRenderer(), 300, 500, 100, 100);
-    Entity* e1 = new Entity(window->getRenderer(), 400, 500, 100, 100);
     // Audio* audio = new Audio("res/musics/Inst.ogg");
 
     const Uint8* keys = SDL_GetKeyboardState(nullptr);
+
+    int map[5][5] = {
+        {1, 0, 0, 1, 1},
+        {0, 1, 0, 0, 0},
+        {0, 0, 1, 0, 0},
+        {0, 0, 1, 0, 0},
+        {0, 1, 1, 0, 0},
+    };
+
+    Level* level = new Level(window->getRenderer(), map, player);
 
     bool run = true;
     SDL_Event event;
@@ -32,14 +42,10 @@ int main() {
 
         // audio->loop();
 
-        player->collide(e);
-        player->collide(e1);
-
         SDL_RenderClear(window->getRenderer());
 
+        level->draw();
         player->draw();
-        e->draw();
-        e1->draw();
 
         SDL_SetRenderDrawColor(window->getRenderer(), 120, 200, 255, 255);
         SDL_RenderPresent(window->getRenderer());
@@ -48,8 +54,8 @@ int main() {
 
     delete window;
     delete player;
-    delete keys;
-    delete e, e1;
+    delete level;
+
     // delete audio;
 
     return no;

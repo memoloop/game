@@ -1,13 +1,14 @@
 #include "engine/entity.hpp"
 
-Entity::Entity(SDL_Renderer* renderer, int x, int y, int w, int h, const char* path) {
+Entity::Entity(SDL_Renderer* renderer, int x, int y, int w, int h, std::string path) {
     rect = {x, y, w, h};
     this->path = path;
     this->renderer = renderer;
+
     hasTexture = true;
     direction = {0, 0};
     setColor(255, 255, 255, 255);
-    setTexture();
+    setTexture(path);
 }
 
 Entity::Entity(SDL_Renderer* renderer, int x, int y, int w, int h) {
@@ -21,12 +22,16 @@ void Entity::setColor(int r, int g, int b, int a) {
     color = {r, g, b, a};
 }
 
-void Entity::setTexture() {
-    this->texture = IMG_LoadTexture(this->renderer, this->path);
+void Entity::setTexture(std::string path) {
+    this->texture = IMG_LoadTexture(this->renderer, path.c_str());
     if(!texture) {
         std::cerr << "Impossible load texture: " << path << std::endl;
         std::exit(eTexture);
     }
+}
+
+void Entity::update() {
+    
 }
 
 void Entity::draw() {
@@ -37,43 +42,6 @@ void Entity::draw() {
     } else {
         SDL_RenderCopy(renderer, texture, NULL, &rect);
         SDL_SetTextureColorMod(texture, (Uint8)color.r, (Uint8)color.g, (Uint8)color.b);
-    }
-}
-
-bool Entity::collide(Entity* other) {
-    if(verticalCollision(other)) return true;
-    if(horizontalCollision(other)) return true;
-    return false;
-}
-
-bool Entity::horizontalCollision(Entity* other) {
-    SDL_Rect result;
-
-    if(SDL_IntersectRect(&this->rect, &other->rect, &result)) {
-        if(direction.x < 0) {       // go left
-            rect.x = other->rect.x+other->rect.w;
-            return true;
-        }
-        if(direction.x > 0) {       // go right
-            rect.x = other->rect.x-rect.w;
-            return true;
-        }
-
-        return false;
-    }
-}
-
-bool Entity::verticalCollision(Entity* other) {
-    SDL_Rect result;
-
-    if(SDL_IntersectRect(&this->rect, &other->rect, &result)) {
-        if(direction.y > 0) {       // go down
-            rect.y = other->rect.y-rect.h;
-            direction.y = 0;
-        }
-        if(direction.y < 0) {       // go up
-            rect.y = other->rect.y+other->rect.h;
-        }
     }
 }
 
