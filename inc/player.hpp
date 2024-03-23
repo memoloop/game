@@ -16,8 +16,15 @@ class Player:Entity {
 
     private:
     float speed;
-    float strenght;
+    float gravityStrenght;
+    float jumpStrenght;
+    std::string idle;
+    std::string walk;
+
     void setGravity();
+    bool checkCollision(SDL_Rect* a, SDL_Rect* b);
+    void animate();
+    void setTexture(std::string path);
 };
 
 #endif
