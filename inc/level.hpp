@@ -10,12 +10,12 @@ class Level {
     SDL_Renderer* renderer;
     std::vector<Entity*> tileList;
     Player* player;
-    int map[5][5];
+    int map[100][100];
     
     void loadMap();
 
     public:
-    Level(SDL_Renderer* renderer, int map[5][5], Player* player);
+    Level(SDL_Renderer* renderer, int map[100][100], Player* player);
     ~Level();
 
     void draw();

@@ -5,6 +5,7 @@
 
 class Player:Entity {
     public:
+    SDL_Rect rect;
     Player(SDL_Renderer* renderer);
     ~Player();
     void input(const Uint8* keys);
