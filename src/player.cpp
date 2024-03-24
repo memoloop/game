@@ -8,6 +8,7 @@ std::string mainPath = "res/images/player/";
 Uint64 deltaTime = SDL_GetTicks64();
 
 Player::Player(SDL_Renderer* renderer):Entity(renderer, x, y, w, h, mainPath.append("player_idle.png").c_str()) {
+    rect = {x, y, w, h};
     speed = 6;
     gravityStrenght = 2;
     jumpStrenght = -5;

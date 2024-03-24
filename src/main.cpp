@@ -18,12 +18,12 @@ int main() {
 
     const Uint8* keys = SDL_GetKeyboardState(nullptr);
 
-    int map[5][5] = {
-        {1, 0, 0, 1, 1},
-        {0, 1, 0, 0, 0},
-        {0, 0, 1, 0, 0},
-        {0, 0, 1, 0, 0},
-        {0, 1, 1, 0, 0},
+    int map[100][100] = {
+        {0, 0, 0, 0, 0, 0, 0},
+        {0, 0, 0, 0, 0, 1, 0},
+        {0, 0, 0, 0, 0, 1, 1},
+        {1, 0, 0, 0, 1, 1, 1},
+        {1, 1, 1, 1, 1, 1, 1}
     };
 
     Level* level = new Level(window->getRenderer(), map, player);
@@ -47,7 +47,7 @@ int main() {
         level->draw();
         player->draw();
 
-        SDL_SetRenderDrawColor(window->getRenderer(), 120, 200, 255, 255);
+        SDL_SetRenderDrawColor(window->getRenderer(), 0, 50, 110, 255);
         SDL_RenderPresent(window->getRenderer());
         SDL_Delay(10);
     }
